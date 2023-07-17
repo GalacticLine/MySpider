@@ -1,6 +1,6 @@
+import time
 import logging
 import os.path
-import time
 import urllib.request
 from PIL import Image
 from bs4 import BeautifulSoup
