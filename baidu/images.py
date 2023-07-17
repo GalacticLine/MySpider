@@ -4,25 +4,24 @@
 import logging
 import re
 import os
+import time
+
 import requests
 
 
 class BaiduImageCrawler:
 
-    def __init__(self, keyword: str, path: str, ext='.jpg', timeout=5):
+    def __init__(self, keyword: str, path: str, ext='.jpg', timeout=5, freq=1):
         """
         关键词爬取百度图片 爬虫类。
         :param keyword: 关键词
         :param path: 保存路径
         :param ext: 图像文件后缀
         :param timeout: 超时阈值
+        :param freq: 爬取频率
         """
         session = requests.session()
-        session.headers.update({
-            'user-agent': 'Mozilla/5.0 (Windows NT 6.1) '
-                          'AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/86.0.4240.198 Safari/537.36'
-        })
+        session.headers.update({"User-Agent": "Baiduspider"})
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -33,6 +32,7 @@ class BaiduImageCrawler:
         self.timeout = timeout
         self.ext = ext
         self.main_url = 'http://image.baidu.com'
+        self.freq = freq
 
     def next_html(self, html):
         """
@@ -72,12 +72,13 @@ class BaiduImageCrawler:
         """
         print('\n正在处理：第', page_idx, '页。\n')
         urls = re.findall('"objURL":"(.*?)"', html, re.S)
-        
+
         length = len(urls)
         for idx, url in enumerate(urls):
             print(f'\n[{idx + 1}/{length}]')
             name = f'{self.keyword}_{page_idx}_{idx}{self.ext}'
             self.save_image(url, f'{self.path}/{name}')
+            time.sleep(self.freq)
 
     def main(self, start=0, length=0):
         """
@@ -95,6 +96,7 @@ class BaiduImageCrawler:
         if start > 0:
             for _ in range(start):
                 html = self.next_html(html)
+                time.sleep(self.freq)
 
         for idx in range(length):
             html = self.next_html(html)
