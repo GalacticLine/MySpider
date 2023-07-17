@@ -12,12 +12,14 @@ from selenium.webdriver.chrome.options import Options
 
 
 class FirstPPTCrawler:
-    def __init__(self, target: str, path: str, down_line=0):
+
+    def __init__(self, target: str, path: str, down_line=0, freq=5):
         """
         第一PPT爬虫类
         :param target: 爬取目标板块
         :param path: 保存路径
         :param down_line: 下载线路，0或者1
+        :param freq: 爬取频率
         """
         path = os.path.abspath(path)
         if not os.path.exists(path):
@@ -33,6 +35,7 @@ class FirstPPTCrawler:
 
         assert down_line == 0 or down_line == 1
         self.down_mode = down_line
+        self.freq = freq
 
     def _get_target_url(self, target):
         resp = requests.get(self.download_url)
@@ -42,13 +45,12 @@ class FirstPPTCrawler:
         target = self.main_url + target[:-1]
         return target
 
-    def craw_ppts(self, page_idx=0, start=0, length=1, freq=5):
+    def craw_ppts(self, page_idx=0, start=0, length=1):
         """
         获取多个ppt.
         :param page_idx: 页码
         :param start: 当前页起始ppt索引
         :param length: 获取数量
-        :param freq: 频率
         :return:
         """
         if page_idx == 0:
@@ -66,7 +68,7 @@ class FirstPPTCrawler:
 
         for href in hrefs[start:length]:
             self.craw_ppt(href)
-            time.sleep(freq)
+            time.sleep(self.freq)
         return hrefs
 
     def craw_ppt(self, href):
@@ -92,7 +94,3 @@ class FirstPPTCrawler:
         li = box.find_element(by=By.CLASS_NAME, value=mode)
         li.click()
 
-
-if __name__ == '__main__':
-    ppt = FirstPPTCrawler('工作总结PPT', './FirstPPT')
-    ppt.craw_ppts()
