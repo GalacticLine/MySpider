@@ -60,13 +60,13 @@ def save_images(browser, save_path):
     scroll_refresh(browser, wait_time=2)
 
 
-def craw_image(keyword: str, start=0, length=2, save_path='./BaiduImage'):
+def craw_image(keyword: str, start=0, length=2, path='./Image'):
     """
     爬取百度图片实现。
     :param keyword: 图片搜索关键字
     :param start: 起始滚动位置
     :param length: 爬取滚动页面长度
-    :param save_path: 保存路径
+    :param path: 保存路径
     :return:
     """
     url = 'https://www.baidu.com/'
@@ -85,15 +85,16 @@ def craw_image(keyword: str, start=0, length=2, save_path='./BaiduImage'):
     href = soup.select('a[href*="http://image.baidu.com/i"]')[0]['href']
     browser.get(href)
 
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
+    if not os.path.exists(path):
+        os.makedirs(path)
+    print('图片将保存于: ', os.path.abspath(path))
 
     if start > 0:
         for _ in range(start):
             scroll_refresh(browser)
 
     for _ in range(length):
-        save_images(browser, save_path)
+        save_images(browser, path)
 
     browser.quit()
 
