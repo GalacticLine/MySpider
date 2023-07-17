@@ -72,7 +72,10 @@ class BaiduImageCrawler:
         """
         print('\n正在处理：第', page_idx, '页。\n')
         urls = re.findall('"objURL":"(.*?)"', html, re.S)
+        
+        length = len(urls)
         for idx, url in enumerate(urls):
+            print(f'\n[{idx + 1}/{length}]')
             name = f'{self.keyword}_{page_idx}_{idx}{self.ext}'
             self.save_image(url, f'{self.path}/{name}')
 
