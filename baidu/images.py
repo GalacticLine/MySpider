@@ -20,9 +20,11 @@ class BaiduImageCrawler:
         :param freq: 爬取频率
         """
         session = requests.session()
-        session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) '
-                                              'AppleWebKit/537.36 (KHTML, like Gecko) '
-                                              'Chrome/104.0.0.0 Safari/537.36'})
+        session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) '
+                          'AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/104.0.0.0 Safari/537.36'
+        })
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -45,7 +47,7 @@ class BaiduImageCrawler:
         html = self.session.get(url).text
         return html
 
-    def save_image(self, url, filepath):
+    def craw_image(self, url, filepath):
         """
         保存单个图像。
         :param url: 图像url
@@ -64,7 +66,7 @@ class BaiduImageCrawler:
         except Exception as e:
             logging.warning(e)
 
-    def save_images(self, html, page_idx):
+    def craw_images(self, html, page_idx):
         """
         保存某页的全部图像。
         :param html: html页面
@@ -78,7 +80,7 @@ class BaiduImageCrawler:
         for idx, url in enumerate(urls):
             print(f'\n[{idx + 1}/{length}]')
             name = f'{self.keyword}_{page_idx}_{idx}{self.ext}'
-            self.save_image(url, f'{self.path}/{name}')
+            self.craw_image(url, f'{self.path}/{name}')
             time.sleep(self.freq)
 
     def main(self, start=0, length=0):
@@ -92,7 +94,7 @@ class BaiduImageCrawler:
         html = self.session.get(url).text
 
         if start == 0:
-            self.save_images(html, 1)
+            self.craw_images(html, 1)
 
         if start > 0:
             for _ in range(start):
@@ -101,4 +103,4 @@ class BaiduImageCrawler:
 
         for idx in range(length):
             html = self.next_html(html)
-            self.save_images(html, start + idx + 2)
+            self.craw_images(html, start + idx + 2)
