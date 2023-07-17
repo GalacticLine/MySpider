@@ -99,8 +99,3 @@ class BaiduImageCrawler:
         for idx in range(length):
             html = self.next_html(html)
             self.save_images(html, start + idx + 2)
-
-
-if __name__ == '__main__':
-    crawler = BaiduImageCrawler('猫', "./BaiduImageCat")
-    crawler.main()
