@@ -13,7 +13,7 @@ from selenium.webdriver.chrome.options import Options
 
 class FirstPPTCrawler:
 
-    def __init__(self, target: str, path: str, down_line=0, freq=2):
+    def __init__(self, target: str, path: str, down_line=0, freq=3):
         """
         第一PPT爬虫类
         :param target: 爬取目标板块
