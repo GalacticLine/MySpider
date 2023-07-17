@@ -8,19 +8,21 @@ from bs4 import BeautifulSoup
 
 
 class PhilipImageCrawler:
-    def __init__(self, keyword: str, path: str, ext='.jpg'):
+    def __init__(self, keyword: str, path: str, ext='.jpg', freq=1):
         """
         关键词爬取飞利浦产品图片 爬虫类。
         :param keyword: 关键词
         :param path: 保存路径
         :param ext: 图像文件后缀
+        :param freq: 爬取频率
         """
         session = requests.session()
         session.headers.update({
             'Authorization': 'Bearer xx0d641857-e140-4e94-af32-ea8fe1063ce8',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/104.0.0.0 Safari/537.36'})
+                          'Chrome/104.0.0.0 Safari/537.36'
+        })
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -29,6 +31,7 @@ class PhilipImageCrawler:
         self.path = path
         self.session = session
         self.ext = ext
+        self.freq = freq
 
     def search_products(self):
         """
@@ -92,8 +95,4 @@ class PhilipImageCrawler:
             for idx, val in enumerate(data):
                 print(f'\n[{idx + 1}/{length}]')
                 self.craw_image(val)
-
-
-if __name__ == '__main__':
-    crawler = PhilipImageCrawler('电视', './PhilipsImageTV')
-    crawler.craw_images()
+                time.sleep(self.freq)
