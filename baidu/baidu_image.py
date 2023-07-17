@@ -97,3 +97,4 @@ def craw_image(keyword: str, start=0, length=2, save_path='./Image'):
 
 if __name__ == '__main__':
     craw_image("猫")
+    
