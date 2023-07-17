@@ -1,11 +1,10 @@
 """
 爬取百度图片
 """
-import logging
 import re
 import os
 import time
-
+import logging
 import requests
 
 
@@ -21,7 +20,9 @@ class BaiduImageCrawler:
         :param freq: 爬取频率
         """
         session = requests.session()
-        session.headers.update({"User-Agent": "Baiduspider"})
+        session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) '
+                                              'AppleWebKit/537.36 (KHTML, like Gecko) '
+                                              'Chrome/104.0.0.0 Safari/537.36'})
 
         if not os.path.exists(path):
             os.makedirs(path)
