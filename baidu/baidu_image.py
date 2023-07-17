@@ -8,6 +8,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
+def scroll_refresh(browser, wait_time=1):
+    """
+    滑动底部，并等待网页刷新，图像加载。
+    :param browser: 浏览器对象
+    :param wait_time: 等待时间
+    :return:
+    """
+    browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+    time.sleep(wait_time)
+
+
 def save_image(url, save_path):
     """
     保存单张图片
@@ -27,17 +38,6 @@ def save_image(url, save_path):
         print('保存成功：', url)
     except Exception as e:
         logging.warning(f'保存失败：{url}，错误：{e}')
-
-
-def scroll_refresh(browser, wait_time=1):
-    """
-    滑动底部，并等待网页刷新，图像加载。
-    :param browser: 浏览器对象
-    :param wait_time: 等待时间
-    :return:
-    """
-    browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    time.sleep(wait_time)
 
 
 def save_images(browser, save_path):
