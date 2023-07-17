@@ -93,6 +93,6 @@ class FirstPPTCrawler:
         li.click()
 
 
-ppt = FirstPPTCrawler('工作总结PPT', './FirstPPT')
-print(ppt.target_url)
-ppt.craw_ppts()
+if __name__ == '__main__':
+    ppt = FirstPPTCrawler('工作总结PPT', './FirstPPT')
+    ppt.craw_ppts()
