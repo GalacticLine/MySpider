@@ -60,7 +60,7 @@ def save_images(browser, save_path):
     scroll_refresh(browser, wait_time=2)
 
 
-def craw_image(keyword: str, start=0, length=2, save_path='./Image'):
+def craw_image(keyword: str, start=0, length=2, save_path='./BaiduImage'):
     """
     爬取百度图片实现。
     :param keyword: 图片搜索关键字
