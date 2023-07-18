@@ -1,5 +1,5 @@
 """
-京东爬虫
+京东图片爬虫
 """
 import time
 import random
