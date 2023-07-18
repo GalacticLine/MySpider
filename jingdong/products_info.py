@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
-class JDCrawler:
+class JDInfoCrawler:
     def __init__(self, keyword, freq=random.randint(1, 2)):
         """
         京东爬取产品信息 爬虫类
